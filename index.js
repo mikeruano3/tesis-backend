@@ -35,6 +35,7 @@ app.use(function (req, res, next) {
 routes(app);
 // global error handler
 app.use(errorHandler);
+app.use(express.static('www'));
 
 let server_port = process.env.PORT || process.env.BACKEND_PORT;
 app.listen(server_port, function() {

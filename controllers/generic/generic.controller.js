@@ -20,7 +20,8 @@ exports.findByFilter = async(req, res) => {
   try{
     return res.json( await req.schema.find(
                 req.body.query, req.body.projection
-              ).sort(req.body.sort) 
+              ).sort(req.body.sort)
+              .populate(req.body.populate)
             )
   }catch(err){
     return res.status(400).json(err)
