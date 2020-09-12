@@ -36,7 +36,7 @@ routes(app);
 // global error handler
 app.use(errorHandler);
 
-let server_port = process.env.BACKEND_PORT;
+let server_port = process.env.PORT || process.env.BACKEND_PORT;
 app.listen(server_port, function() {
   console.log('[:: INIT ::]');
   console.log(`CORS-enabled web server listening on port: ${server_port}` );

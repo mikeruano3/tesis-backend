@@ -21,5 +21,5 @@ exports.signin = async (req, res) => {
             }}
         );
     }
-    return res.status(200).json({status: "false", message: "Invalid username or passwod", data: ""});
+    return res.status(200).json({status: "false", message: "Nombre de usuario o contraseña inválidos", data: ""});
 }
