@@ -8,17 +8,20 @@ exports.findOne = async(req, res) => {
   }
 }
 
-exports.findMany = async(req, res) => {
+exports.findAll = async(req, res) => {
   try{
-    return res.json(await req.schema.find().sort( { name: 1 } ));
+    return res.json(await req.schema.find());
   }catch(err){
     return res.status(400).json(err)
   }
 }
 
-exports.findAll = async(req, res) => {
+exports.findByFilter = async(req, res) => {
   try{
-    return res.json( await req.schema.find({}))
+    return res.json( await req.schema.find(
+                req.body.query, req.body.projection
+              ).sort(req.body.sort) 
+            )
   }catch(err){
     return res.status(400).json(err)
   }
