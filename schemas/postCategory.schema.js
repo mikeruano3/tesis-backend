@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 var postCategory = new Schema({
-    name : {
+    title : {
         type: String,
         required: true
     }

@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const moment = require("moment");
 
-var posts = new Schema({
-    user : { 
+var files = new Schema({
+    associatedPost : { 
         type: Schema.Types.ObjectId, 
-        ref: 'users'
+        ref: 'posts'
     },
     postCategory : { 
         type: Schema.Types.ObjectId, 
@@ -20,25 +20,14 @@ var posts = new Schema({
         type: String,
         required: true
     },
-    content : {
+    description : {
         type: String,
         required: true
     },
-    files : [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'files'
-    }],
-    reactions : [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'reactions'
-    }],
-    comments : [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'comments'
-    }],
-    sharedCount : {
-        type: Number
+    link : {
+        type: String,
+        required: true
     }
-}, { collection: 'posts' });
+}, { collection: 'files' });
 
-module.exports = mongoose.model('posts', posts);
+module.exports = mongoose.model('files', files);

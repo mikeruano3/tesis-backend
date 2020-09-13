@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const moment = require("moment");
 
 var users = new Schema({
     username : {
@@ -33,7 +34,8 @@ var users = new Schema({
         required: true
     },
     createdAt : {
-        type: Date
+        type: Date,
+        default: moment().format()
     }
 }, { collection: 'users' });
 
