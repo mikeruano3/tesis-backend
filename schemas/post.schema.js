@@ -9,16 +9,14 @@ var posts = new Schema({
     },
     postCategory : { 
         type: Schema.Types.ObjectId, 
-        ref: 'postcategories',
-        required: true
+        ref: 'postcategories'
     },
     createdAt : {
         type: Date,
         default: moment().format()
     },
     title : {
-        type: String,
-        required: true
+        type: String
     },
     content : {
         type: String,
@@ -32,13 +30,25 @@ var posts = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'reactions'
     }],
-    comments : [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'comments'
-    }],
     sharedCount : {
         type: Number
+    },
+    /****** COMMENTS SECTION ******/
+    postAsComment: {
+        parentCommentOrPost : { 
+            type: Schema.Types.ObjectId, 
+            ref: 'posts',
+        },
+        childComments : [{ 
+            type: Schema.Types.ObjectId, 
+            ref: 'posts'
+        }],
+        mentionedUser : { 
+            type: Schema.Types.ObjectId, 
+            ref: 'users'
+        }
     }
+    /*** END OF COMMENT SECTION ***/
 }, { collection: 'posts' });
 
 module.exports = mongoose.model('posts', posts);
