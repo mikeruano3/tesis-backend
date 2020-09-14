@@ -41,8 +41,8 @@ exports.insertOne = async(req, res) => {
 exports.update = async(req, res) => {
   try{
     let result = await req.schema.updateOne(
-      {"_id": req.body.query.id},
-      { $set: req.body.data}
+      req.body.query,
+      req.body.data
     )
     return res.json(result)
   }catch(err){

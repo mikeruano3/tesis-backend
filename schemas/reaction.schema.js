@@ -2,14 +2,14 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 var reaction = new Schema({
-    user : { 
+    post : { 
         type: Schema.Types.ObjectId, 
-        ref: 'users',
+        ref: 'posts',
         required: true
     },
-    count : {
-        type: Number,
-        required: true
+    user : { 
+        type: Schema.Types.ObjectId, 
+        ref: 'users'
     },
     type : {
         type: Number,
