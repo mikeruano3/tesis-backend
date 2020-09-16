@@ -33,16 +33,16 @@ var posts = new Schema({
     sharedCount : {
         type: Number
     },
+    childComments : [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'posts'
+    }],
     /****** COMMENTS SECTION ******/
     postAsComment: {
         parentCommentOrPost : { 
             type: Schema.Types.ObjectId, 
             ref: 'posts',
         },
-        childComments : [{ 
-            type: Schema.Types.ObjectId, 
-            ref: 'posts'
-        }],
         mentionedUser : { 
             type: Schema.Types.ObjectId, 
             ref: 'users'

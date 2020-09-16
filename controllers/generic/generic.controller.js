@@ -22,6 +22,8 @@ exports.findByFilter = async(req, res) => {
                 req.body.query, req.body.projection
               ).sort(req.body.sort)
               .populate(req.body.populate)
+              .populate(req.body.populate2)
+              .populate(req.body.populate3)
             )
   }catch(err){
     return res.status(400).json(err)

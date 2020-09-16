@@ -1,4 +1,5 @@
 const authService 	        = require('../../services/auth.service');
+const userSchema            = require("../../schemas/user.schema");
 require('dotenv').config();
 
 /***
@@ -6,18 +7,17 @@ require('dotenv').config();
  */
 exports.signin = async (req, res) => {
     const idUser = 1
-    const username = process.env.ROOTUSER
-    const password = process.env.ROOTPASS
-    if(req.body.username == username && req.body.password == password){
+    let userData = await userSchema.findOne(
+        {username: req.body.username, password: req.body.password},
+        {password: 0})
+    if(userData){
         let token = await authService.generateToken({
             idUser: idUser
         });
         return res.status(200).json(
             {status: "true", message: "OK", data: {
                 accessToken: token,
-                idUser: idUser,
-                username: username,
-                roles: []
+                userData: userData
             }}
         );
     }
