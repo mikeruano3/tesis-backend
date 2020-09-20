@@ -9,7 +9,7 @@ var files = new Schema({
     },
     postCategory : { 
         type: Schema.Types.ObjectId, 
-        ref: 'postcategories',
+        ref: 'categories',
         required: true
     },
     createdAt : {

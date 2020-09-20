@@ -9,7 +9,10 @@ var posts = new Schema({
     },
     postCategory : { 
         type: Schema.Types.ObjectId, 
-        ref: 'postcategories'
+        ref: 'categories'
+    },
+    postClasification : {
+        type: String
     },
     createdAt : {
         type: Date,

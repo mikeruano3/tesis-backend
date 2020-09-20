@@ -2,7 +2,7 @@ const commentSchema  = require("../../schemas/comment.schema");
 const courseSchema  = require("../../schemas/course.schema");
 const fileSchema  = require("../../schemas/file.schema");
 const postSchema  = require("../../schemas/post.schema");
-const postCategorySchema  = require("../../schemas/postCategory.schema");
+const categorySchema  = require("../../schemas/category.schema");
 const reactionSchema  = require("../../schemas/reaction.schema");
 const roleSchema  = require("../../schemas/role.schema");
 const userSchema  = require("../../schemas/user.schema");
@@ -34,8 +34,8 @@ selectSchema = async(schemaId)=>{
         return fileSchema
     case 'posts':
         return postSchema
-    case 'postcategories':
-        return postCategorySchema
+    case 'categories':
+        return categorySchema
     case 'reactions':
         return reactionSchema
     case 'roles':

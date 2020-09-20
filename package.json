@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "git push heroku develop:master"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +18,10 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "express-session": "^1.17.1",
+    "googleapis": "^39.2.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.2.1",
+    "mime-types": "^2.1.27",
     "moment": "^2.27.0",
     "mongoose": "^5.10.0"
   },
