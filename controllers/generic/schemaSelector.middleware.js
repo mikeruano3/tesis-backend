@@ -1,5 +1,4 @@
 const commentSchema  = require("../../schemas/comment.schema");
-const courseSchema  = require("../../schemas/course.schema");
 const fileSchema  = require("../../schemas/file.schema");
 const postSchema  = require("../../schemas/post.schema");
 const categorySchema  = require("../../schemas/category.schema");
@@ -28,8 +27,6 @@ selectSchema = async(schemaId)=>{
   switch (schemaId) {
     case 'comments':
         return commentSchema
-    case 'courses':
-        return courseSchema
     case 'files':
         return fileSchema
     case 'posts':

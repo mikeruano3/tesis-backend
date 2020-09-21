@@ -36,10 +36,17 @@ var posts = new Schema({
     sharedCount : {
         type: Number
     },
+    reactionCount : {
+        type: Number
+    },
     childComments : [{ 
         type: Schema.Types.ObjectId, 
         ref: 'posts'
     }],
+    pinned : {
+        type: Number,
+        default: 0
+    },
     /****** COMMENTS SECTION ******/
     postAsComment: {
         parentCommentOrPost : { 

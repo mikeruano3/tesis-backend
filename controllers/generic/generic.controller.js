@@ -24,6 +24,8 @@ exports.findByFilter = async(req, res) => {
               .populate(req.body.populate)
               .populate(req.body.populate2)
               .populate(req.body.populate3)
+              .limit(req.body.limit)
+              .skip(req.body.skip)
             )
   }catch(err){
     return res.status(400).json(err)
