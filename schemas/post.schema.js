@@ -14,6 +14,10 @@ var posts = new Schema({
     postClasification : {
         type: String
     },
+    university : { 
+        type: Schema.Types.ObjectId, 
+        ref: 'categories'
+    },
     createdAt : {
         type: Date,
         default: moment().format()

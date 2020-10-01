@@ -13,7 +13,7 @@ mongoose.set('useCreateIndex', true);
 
 var app = express()
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 var corsOptions = {

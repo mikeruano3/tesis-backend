@@ -32,6 +32,9 @@ var categories = new Schema({
     },
     subtitle : {
         type: String
+    },
+    link : {
+        type: String
     }
 }, { collection: 'categories' });
 
