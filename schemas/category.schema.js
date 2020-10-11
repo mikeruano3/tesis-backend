@@ -15,6 +15,10 @@ var categories = new Schema({
         type: String,
         required: true
     },
+    university : { 
+        type: Schema.Types.ObjectId, 
+        ref: 'categories'
+    },
     avatarImg : {
         type: String
     },
@@ -35,7 +39,11 @@ var categories = new Schema({
     },
     link : {
         type: String
-    }
+    },
+    pinned : {
+        type: Number,
+        default: 0
+    },
 }, { collection: 'categories' });
 
 module.exports = mongoose.model('categories', categories);
