@@ -61,7 +61,11 @@ var posts = new Schema({
             type: Schema.Types.ObjectId, 
             ref: 'users'
         }
-    }
+    },
+    postFiles : [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'files',
+    }]
     /*** END OF COMMENT SECTION ***/
 }, { collection: 'posts' });
 

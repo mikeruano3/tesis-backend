@@ -9,24 +9,26 @@ var files = new Schema({
     },
     postCategory : { 
         type: Schema.Types.ObjectId, 
-        ref: 'categories',
-        required: true
+        ref: 'categories'
     },
     createdAt : {
         type: Date,
         default: moment().format()
     },
-    title : {
-        type: String,
-        required: true
+    fileName : {
+        type: String
     },
-    description : {
-        type: String,
-        required: true
+    fileType : {
+        type: String
     },
-    link : {
-        type: String,
-        required: true
+    firestoreId : {
+        type: String
+    },
+    firestoreFolder : {
+        type: String
+    },
+    firestoreDownloadLink : {
+        type: String
     }
 }, { collection: 'files' });
 
