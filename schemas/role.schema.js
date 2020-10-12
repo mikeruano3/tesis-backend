@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-var course = new Schema({
-    name : {
+var role = new Schema({
+    title : {
         type: String,
         required: true
     },
@@ -10,9 +10,10 @@ var course = new Schema({
         type: String,
         required: true
     },
-    image : {
-        type: String
+    roleType : {
+        type: Number,
+        required: true
     }
-}, { collection: 'courses' });
+}, { collection: 'roles' });
 
-module.exports = mongoose.model('courses', course);
+module.exports = mongoose.model('roles', role);

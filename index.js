@@ -13,13 +13,11 @@ mongoose.set('useCreateIndex', true);
 
 var app = express()
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
 var corsOptions = {
-  origin: [`${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`,
-    `${process.env.FRONTEND_HOST}`
-  ]
+  origin: '*'
 };
 app.use(cors(corsOptions));
 //app.use(jwt());
@@ -35,8 +33,9 @@ app.use(function (req, res, next) {
 routes(app);
 // global error handler
 app.use(errorHandler);
+app.use(express.static('www'));
 
-let server_port = process.env.BACKEND_PORT;
+let server_port = process.env.PORT || process.env.BACKEND_PORT;
 app.listen(server_port, function() {
   console.log('[:: INIT ::]');
   console.log(`CORS-enabled web server listening on port: ${server_port}` );
