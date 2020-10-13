@@ -13,7 +13,10 @@ exports.signin = async (req, res) => {
             { email: req.body.email, password: md5(req.body.password) },
             { password: 0 })
         if (userData) {
+            console.log(userData);
+            console.log('bef')
             let token = await authService.generateToken({ idUser: userData._id });
+            console.log('after')
             return res.status(200).json({
                 status: true, message: "OK", data: { accessToken: token, userData: userData }
             });
