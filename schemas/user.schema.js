@@ -19,10 +19,13 @@ var users = new Schema({
         type: String,
         required: true
     },
-    profesion : {
+    profession : {
         type: String
     },
-    city : {
+    direction : {
+        type: String
+    },
+    university : {
         type: String
     },
     image : {
