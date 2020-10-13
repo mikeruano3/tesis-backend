@@ -15,12 +15,12 @@ exports.signin = async (req, res) => {
         if (userData) {
             let token = await authService.generateToken({ idUser: userData._id });
             return res.status(200).json({
-                status: "true", message: "OK", data: { accessToken: token, userData: userData }
+                status: true, message: "OK", data: { accessToken: token, userData: userData }
             });
         }
-        return res.status(200).json({ status: "false", message: "Nombre de usuario o contraseña inválidos", data: "" });
+        return res.status(200).json({ status: false, message: "Nombre de usuario o contraseña inválidos", data: "" });
     } catch (err) {
-        return res.status(200).json(err);
+        return res.status(400).json(err);
     }
 }
 
@@ -32,9 +32,9 @@ exports.registerAppUser = async (req, res) => {
         let roleData = await roleSchema.findOne({ roleType: 2 })
         req.body.role = roleData
         let creationData = await userSchema.create(req.body)
-        return res.status(200).json({ status: "true", message: "OK", data: creationData });
+        return res.status(200).json({ status: true, message: "OK", data: creationData });
     } catch (err) {
-        return res.status(200).json(err);
+        return res.status(400).json(err);
     }
 }
 
@@ -47,7 +47,7 @@ exports.updateAppUser = async(req, res) => {
             {"_id": req.params.id},
             { $set: req.body}
         )
-        return res.status(200).json({ status: "true", message: "OK", data: result })
+        return res.status(200).json({ status: true, message: "OK", data: result })
     }catch(err){
       return res.status(400).json(err)
     }
