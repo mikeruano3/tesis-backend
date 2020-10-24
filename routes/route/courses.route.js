@@ -1,7 +1,7 @@
 const express               = require('express');
 const app                   = express();
 const router 		        = express.Router();
-const dataCtrl	            = require('../../controllers/courses/courses.controller')
+const dataCtrl	            = require('../../controllers/example/courses.controller')
 
 module.exports = router
 
