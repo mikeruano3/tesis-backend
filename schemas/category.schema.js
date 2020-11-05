@@ -44,6 +44,14 @@ var categories = new Schema({
         type: Number,
         default: 0
     },
+    avatarImgFileRef: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'files',
+    },
+    topImgFileRef: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'files',
+    }
 }, { collection: 'categories' });
 
 module.exports = mongoose.model('categories', categories);
