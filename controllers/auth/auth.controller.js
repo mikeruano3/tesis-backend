@@ -29,6 +29,13 @@ exports.registerAppUser = async (req, res) => {
         if (req.body.password) {
             req.body.password = md5(req.body.password)
         }
+        if(req.body.email){
+            let uniqueNameTester = await userSchema.findOne({ email: req.body.email })
+            if(uniqueNameTester){
+                return res.status(200).json({ status: false, 
+                    message: "Este email ya se encuentra registrado!", data: req.body.email })
+            }
+        }
         let roleData = await roleSchema.findOne({ roleType: 2 })
         req.body.role = roleData
         let creationData = await userSchema.create(req.body)
