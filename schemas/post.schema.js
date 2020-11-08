@@ -37,8 +37,9 @@ var posts = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'reactions'
     }],
-    sharedCount : {
-        type: Number
+    reportedCount : {
+        type: Number,
+        default: 0
     },
     reactionCount : {
         type: Number
