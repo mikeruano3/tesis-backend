@@ -11,7 +11,7 @@ exports.signin = async (req, res) => {
     try {
         let userData = await userSchema.findOne(
             { email: req.body.email, password: md5(req.body.password) },
-            { password: 0 })
+            { password: 0 }).populate('role')
         if (userData) {
             let token = await authService.generateToken({ idUser: userData._id });
             return res.status(200).json({
