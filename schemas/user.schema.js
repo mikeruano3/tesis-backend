@@ -39,6 +39,9 @@ var users = new Schema({
     createdAt : {
         type: Date,
         default: moment().format()
+    },
+    passwordResetToken : {
+        type: String
     }
 }, { collection: 'users' });
 

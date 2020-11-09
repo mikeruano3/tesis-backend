@@ -8,3 +8,5 @@ module.exports = router
 router.post('/signin',                  authCtrl.signin);
 router.post('/signup-app-user',         authCtrl.registerAppUser);
 router.put('/update-app-user/:id',      authCtrl.updateAppUser);
+router.post('/send-reset-password',     authCtrl.sendEmailResetPassword);
+router.post('/reset-password-data',     authCtrl.resetPasswordWithData);

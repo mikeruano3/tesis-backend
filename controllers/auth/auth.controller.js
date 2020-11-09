@@ -1,6 +1,7 @@
 const authService = require('../../services/auth.service');
 const userSchema = require("../../schemas/user.schema");
 const roleSchema = require("../../schemas/role.schema");
+const sendEmail = require("../../services/sendmail");
 const md5 = require('md5');
 require('dotenv').config();
 
@@ -57,5 +58,50 @@ exports.updateAppUser = async(req, res) => {
         return res.status(200).json({ status: true, message: "OK", data: result })
     }catch(err){
       return res.status(400).json(err)
+    }
+}
+
+exports.sendEmailResetPassword = async (req, res) => {
+    try {
+        if(req.body.email){
+            let userData = await userSchema.findOne({ email: req.body.email })
+            if(!userData || !userData._id){
+                return res.status(200).json({ status: false, 
+                    message: "Este email no se encuentra registrado!", data: req.body.email })
+            }
+            const token = Math.random().toString(25).substring(2);
+            let resultUpdate = await userSchema.updateOne(
+                {"_id": userData._id},
+                { $set: { passwordResetToken : token }}
+            )
+            const resultEmail = await sendEmail.sendReestablishEmail(token, req.body.email)
+            return res.status(200).json({ status: true, message: "OK", data: { token: resultEmail } })
+        }else{
+            return res.status(200).json({ status: false, message: "Email no encontrado!", data: req.body.email })
+        }
+        
+    } catch (err) {
+        return res.status(400).json(err);
+    }
+}
+
+exports.resetPasswordWithData = async (req, res) => {
+    try {
+        if(req.body.password && req.body.token){
+            let userData = await userSchema.findOne({ passwordResetToken: req.body.token })
+            if(!userData || !userData._id){
+                return res.status(200).json({ status: false, 
+                    message: "El token ha expirado, vuelva a enviar el formulario", data: "No se encuentra el usuario!" })
+            }
+            let resultUpdate = await userSchema.updateOne(
+                {"_id": userData._id},
+                { $set: { passwordResetToken : null, password: md5(req.body.password) }}
+            )
+            return res.status(200).json({ status: true, message: "OK", data: "Contraseña restablecida correctamente!" })
+        }else{
+            return res.status(200).json({ status: false, message: "Ha habido un error!", data: "El link no funciona" })
+        }
+    } catch (err) {
+        return res.status(400).json(err);
     }
 }
