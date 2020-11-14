@@ -5,9 +5,9 @@ const sendEmail = require("../../services/sendmail");
 const md5 = require('md5');
 require('dotenv').config();
 
-/***
- * TODO: Cambiar a base de datos  
- */
+/**********************************
+ * INICIAR SESIÓN EN LA APLICACIÓN
+ *********************************/
 exports.signin = async (req, res) => {
     try {
         let userData = await userSchema.findOne(
@@ -27,18 +27,31 @@ exports.signin = async (req, res) => {
 
 exports.registerAppUser = async (req, res) => {
     try {
+
+        if( !req.body.email || req.body.email == '' ){
+            return res.status(200).json({ status: false, 
+                message: "Proporcione un correo electrónico!", data: req.body.email })
+        }
         if (req.body.password) {
             req.body.password = md5(req.body.password)
         }
-        if(req.body.email){
-            let uniqueNameTester = await userSchema.findOne({ email: req.body.email })
-            if(uniqueNameTester){
-                return res.status(200).json({ status: false, 
-                    message: "Este email ya se encuentra registrado!", data: req.body.email })
-            }
+
+        let uniqueNameTester = await userSchema.findOne({ email: req.body.email })
+        if(uniqueNameTester){
+            return res.status(200).json({ status: false, 
+                message: "Este email ya se encuentra registrado!", data: req.body.email })
         }
         let roleData = await roleSchema.findOne({ roleType: 2 })
         req.body.role = roleData
+
+        if(process.env.VALIDATE_EMAIL == 1){
+            const token = Math.random().toString(25).substring(2)
+            await sendEmail.sendConfirmEmail(token, req.body.email)
+            req.body.emailConfirmationToken = token
+        }else{
+            req.body.verifiedEmailStatus = 1
+        }
+        
         let creationData = await userSchema.create(req.body)
         return res.status(200).json({ status: true, message: "OK", data: creationData });
     } catch (err) {
@@ -60,6 +73,12 @@ exports.updateAppUser = async(req, res) => {
       return res.status(400).json(err)
     }
 }
+
+/***********************************************************************
+ * ENVIA UN EMAIL CON UN LINK DE CONFIRMACION QUE ABRIRÁ UNA 
+ * PÁGINA PARA ESCRIBIR EL NUEVO PASSWORD, SETEA UN TOKEN QUE
+ * SE USARÁ PARA HACER MATCH CON EL USUARIO QUE PIDIÓ EL CAMBIO
+ *********************************************************************/
 
 exports.sendEmailResetPassword = async (req, res) => {
     try {
@@ -85,6 +104,10 @@ exports.sendEmailResetPassword = async (req, res) => {
     }
 }
 
+/***********************************************************************
+ * RECIBE Y SETEA EL NUEVO PASSWORD QUE ES MANDADO DESDE UN FRONTEND
+ *********************************************************************/
+
 exports.resetPasswordWithData = async (req, res) => {
     try {
         if(req.body.password && req.body.token){
@@ -101,6 +124,33 @@ exports.resetPasswordWithData = async (req, res) => {
         }else{
             return res.status(200).json({ status: false, message: "Ha habido un error!", data: "El link no funciona" })
         }
+    } catch (err) {
+        return res.status(400).json(err);
+    }
+}
+
+/***********************************************************************
+ * RECIBE UN TOKEN, BUSCA EL USUARIO ASOCIADO, CAMBIA EL ESTADO
+ * A verifiedEmailStatus = 1 Y ELIMINA EL TOKEN
+ *********************************************************************/
+
+exports.confirmEmailWithToken = async (req, res) => {
+    try {
+        if(req.params.id){
+            let userData = await userSchema.findOne({ emailConfirmationToken: req.params.id })
+            if(!userData || !userData._id){
+                return res.status(200).json({ status: false, 
+                    message: "El token ha expirado o es inválido!", data: req.params.id })
+            }
+            let resultUpdate = await userSchema.updateOne(
+                {"_id": userData._id},
+                { $set: { emailConfirmationToken : null, verifiedEmailStatus: 1 }}
+            )
+            return res.status(200).json({ status: true, message: "Email confirmado!", data: resultUpdate })
+        }else{
+            return res.status(200).json({ status: false, message: "Token no encontrado!", data: '' })
+        }
+        
     } catch (err) {
         return res.status(400).json(err);
     }

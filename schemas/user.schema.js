@@ -42,6 +42,13 @@ var users = new Schema({
     },
     passwordResetToken : {
         type: String
+    },
+    emailConfirmationToken : {
+        type: String
+    },
+    verifiedEmailStatus : {
+        type: Number,
+        default: 0
     }
 }, { collection: 'users' });
 
