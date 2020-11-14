@@ -135,7 +135,7 @@ reestablishPasswordHTML = function (token) {
 
 confirmEmailHTML = function(token){
     let subject = 'Verificar correo electrónico'
-    let urlToken = process.env.CONFIRM_PASS_SITE_URL + '/' + token
+    let urlToken = process.env.CONFIRM_EMAIL_SITE_URL + '/' + token
     let text = `Su correo electrónico no soporta HTML, visite el siguiente enlace: ${urlToken}`
 
     let html = 
